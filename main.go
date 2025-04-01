@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -12,8 +13,13 @@ func main() {
 		c.Next()
 	})
 
-	// سرو کردن فایل‌های ویدئو (HLS)
+	// Serve video files (HLS)
 	r.StaticFS("/videos", http.Dir("./videos"))
+
+	// Serve the index.html file at the root route
+	r.GET("/", func(c *gin.Context) {
+		c.File("./frontend/index.html")
+	})
 
 	r.Run(":8080")
 }
